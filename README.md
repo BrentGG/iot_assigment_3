@@ -10,7 +10,10 @@ docker buildx create --name pynqbuilder
 docker buildx use pynqbuilder
 ```
 
-Then it was time to build using buildx and push the images to a registry. I tried to use the Github registry for this but I couldn't get this to work so decided to use Dockerhub instead. The command goes as follows:
+Then it was time to build using buildx and push the images to a registry. I tried to use the Github registry for this but I couldn't get this to work so decided to use Dockerhub instead. First you must login to Dockerhub, then the command goes as follows:
+```
+docker login
+```
 ```
 docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t brentgg/iot_assignment_3:latest --push .
 ```

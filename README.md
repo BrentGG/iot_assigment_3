@@ -58,6 +58,18 @@ docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t ghcr.io/b
 
 ![docker buildx build and push to ghcr instead of dockerhub](buildx_ghcr.PNG?raw=true)
 
+Don't forget to install Docker:
+```
+sudo apt-get update
+```
+```
+sudo apt-get install -y docker.io
+```
+And check the install using
+```
+docker -v
+```
+
 The process of pulling and running this image on the Pynq is once again the same but with a different path. It must be noted that I had to change the visibility of the image to public to be able to pull it on the Pynq, even though I was logged into ghcr.
 ```
 sudo docker pull ghcr.io/brentgg/iot_assignment_3:latest

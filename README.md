@@ -10,7 +10,9 @@ docker buildx create --name pynqbuilder
 docker buildx use pynqbuilder
 ```
 
-Then it was time to build using buildx and push the images to a registry. I tried to use the Github registry for this but I couldn't get this to work so decided to use Dockerhub instead. First you must login to Dockerhub, then the command goes as follows:
+## Using DockerHub
+
+Then it was time to build using buildx and push the images to a registry. I tried to use the Github registry for this but I couldn't get this to work so decided to use Dockerhub instead (it turns out using de Github registry is actually just as easy, the process is described in the next section). First you must login to Dockerhub, then the command goes as follows:
 ```
 docker login
 ```
@@ -42,3 +44,26 @@ sudo docker run brentgg/io_assignment_3
 At which point "Hello World" will be printed to the console, without a newline... on purpose. This can be seen in the image below.
 
 ![running the image on the Pynq](on_pynq.PNG?raw=true)
+
+## Using GitHub
+
+To use the Github registry you must first login to it using Docker.
+```
+docker login ghcr.io -u brentgg -p TOKEN
+```
+Then building using buildx is the same except the path has ```ghcr.io/``` in front of it:
+```
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t ghcr.io/brentgg/iot_assignment_3:latest --push .
+```
+
+![docker buildx build and push to ghcr instead of dockerhub](buildx_ghcr.PNG?raw=true)
+
+The process of pulling and running this image on the Pynq is once again the same but with a different path. It must be noted that I had to change the visibility of the image to public to be able to pull it on the Pynq, even though I was logged into ghcr.
+```
+sudo docker pull ghcr.io/brentgg/iot_assignment_3:latest
+```
+```
+sudo docker run ghcr.io/brentgg/io_assignment_3
+```
+
+![running the ghcr image on the Pynq](on_pynq_ghcr.PNG?raw=true)
